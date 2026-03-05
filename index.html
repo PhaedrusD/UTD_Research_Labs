@@ -638,15 +638,9 @@
 <!-- ════════ QR CODE ════════ -->
 <section class="qr-section" id="qr">
   <h2>Take This Page With You</h2>
-  <p>Once this page is hosted online, update the URL below and the QR code will generate automatically. Print it for your recruiting table!</p>
-  <div style="margin-bottom:1rem;">
-    <input type="text" id="qr-url" value="https://chemistry.utdallas.edu" 
-      style="font-family: inherit; font-size:0.85rem; padding:0.5rem 0.75rem; border:1px solid var(--light-border); border-radius:8px; width:100%; max-width:400px;" 
-      placeholder="Paste your hosted URL here">
-    <button onclick="generateQR()" style="margin-top:0.5rem; font-family:inherit; font-size:0.85rem; font-weight:600; padding:0.5rem 1.2rem; background:var(--utd-green); color:#fff; border:none; border-radius:8px; cursor:pointer;">Generate QR</button>
-  </div>
+  <p>Scan the code below to open this page on your phone.</p>
   <div id="qr-code-container"></div>
-  <p class="qr-note">Tip: Host this HTML file on GitHub Pages, Netlify, or any static host. Then paste the URL above and print the QR code for your booth.</p>
+  <p class="qr-note">phaedrusd.github.io/UTD_Research_Labs</p>
 </section>
 
 </div><!-- .content -->
@@ -690,15 +684,12 @@
     });
   });
 
-  // QR Code generator
-  let qrObj = null;
+  // QR Code generator — permanent URL
   function generateQR() {
-    const url = document.getElementById('qr-url').value.trim();
-    if (!url) return;
     const container = document.getElementById('qr-code-container');
     container.innerHTML = '';
-    qrObj = new QRCode(container, {
-      text: url,
+    new QRCode(container, {
+      text: 'https://phaedrusd.github.io/UTD_Research_Labs/',
       width: 220,
       height: 220,
       colorDark: '#006633',
