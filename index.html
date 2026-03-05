@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UT Dallas — Department of Chemistry & Biochemistry</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --utd-green: #008542;
+    --utd-green-dark: #006633;
+    --utd-orange: #C75B12;
+    --utd-orange-light: #E87722;
+    --cream: #FAF8F4;
+    --charcoal: #1E1E1E;
+    --warm-gray: #4A4A4A;
+    --light-border: #E2DDD5;
+    --section-bg: #F2EFEA;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --hover-shadow: 0 6px 24px rgba(0,0,0,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───── HERO ───── */
+  .hero {
+    background: linear-gradient(135deg, var(--utd-green-dark) 0%, var(--utd-green) 50%, #00a854 100%);
+    color: #fff;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -30%;
+    width: 160%; height: 220%;
+    background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(4px);
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 span { display: block; font-size: 0.6em; opacity: 0.85; margin-top: 0.2rem; }
+  .hero-sub {
+    font-size: 1rem;
+    opacity: 0.85;
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .hero-link {
+    display: inline-block;
+    margin-top: 1.2rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(255,255,255,0.4);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .hero-link:hover { border-color: #fff; }
+
+  /* ───── NAV TABS ───── */
+  .nav-strip {
+    background: #fff;
+    border-bottom: 1px solid var(--light-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-strip::-webkit-scrollbar { display: none; }
+  .nav-inner {
+    display: flex;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .nav-inner a {
+    flex-shrink: 0;
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--warm-gray);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-inner a:hover,
+  .nav-inner a.active {
+    color: var(--utd-green);
+    border-bottom-color: var(--utd-green);
+  }
+
+  /* ───── SECTIONS ───── */
+  .content { max-width: 800px; margin: 0 auto; padding: 0 1.25rem; }
+
+  .section { padding: 2.5rem 0; }
+  .section + .section { border-top: 1px solid var(--light-border); }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--utd-orange);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: var(--charcoal);
+    margin-bottom: 0.6rem;
+  }
+  .section-desc {
+    font-size: 0.95rem;
+    color: var(--warm-gray);
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+    line-height: 1.65;
+  }
+
+  /* ───── RESEARCH AREA CARDS ───── */
+  .area-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .area-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: var(--card-shadow);
+    border-left: 3px solid var(--utd-green);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .area-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow);
+  }
+  .area-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.4rem;
+  }
+  .area-card p {
+    font-size: 0.82rem;
+    color: var(--warm-gray);
+    line-height: 1.55;
+  }
+
+  /* ───── FACULTY CARDS ───── */
+  .faculty-group-label {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--utd-green-dark);
+    margin: 1.5rem 0 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--light-border);
+  }
+  .faculty-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .faculty-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .faculty-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--hover-shadow);
+  }
+  .faculty-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--charcoal);
+  }
+  .faculty-name a {
+    color: var(--utd-green-dark);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .faculty-name a:hover { border-bottom-color: var(--utd-green); }
+  .faculty-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--utd-orange);
+  }
+  .faculty-focus {
+    font-size: 0.85rem;
+    color: var(--warm-gray);
+    line-height: 1.5;
+  }
+  .faculty-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.3rem;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--section-bg);
+    color: var(--warm-gray);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ───── AFFILIATED ───── */
+  .affiliated-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.6rem;
+  }
+  .aff-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    box-shadow: var(--card-shadow);
+  }
+  .aff-card .faculty-name { font-size: 0.92rem; }
+  .aff-card .faculty-focus { font-size: 0.8rem; }
+
+  /* ───── QR + CTA ───── */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--utd-green-dark), var(--utd-green));
+    color: #fff;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .cta-banner h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .cta-banner p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+  }
+  .cta-banner a {
+    display: inline-block;
+    background: #fff;
+    color: var(--utd-green-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+  .cta-banner a:hover { transform: scale(1.03); }
+
+  .footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--warm-gray);
+    border-top: 1px solid var(--light-border);
+  }
+  .footer a { color: var(--utd-green); text-decoration: none; }
+
+  /* ───── PRINT QR PAGE ───── */
+  .qr-section {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    border-top: 1px solid var(--light-border);
+  }
+  .qr-section h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .qr-section p {
+    font-size: 0.88rem;
+    color: var(--warm-gray);
+    margin-bottom: 1.25rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #qr-code-container {
+    display: inline-block;
+    background: #fff;
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+  }
+  #qr-code-container canvas { display: block; }
+  .qr-note {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--warm-gray);
+    font-style: italic;
+  }
+
+  @media (min-width: 600px) {
+    .faculty-list { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media print {
+    .nav-strip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ HERO ════════ -->
+<header class="hero">
+  <div class="hero-badge">ACS Spring 2026 &nbsp;·&nbsp; Atlanta</div>
+  <h1>Chemistry &amp; Biochemistry
+    <span>The University of Texas at Dallas</span>
+  </h1>
+  <p class="hero-sub">Explore our research strengths, meet our faculty, and discover graduate opportunities in one of the fastest-growing departments in Texas.</p>
+  <a class="hero-link" href="https://chemistry.utdallas.edu/" target="_blank" rel="noopener">chemistry.utdallas.edu &rarr;</a>
+</header>
+
+<!-- ════════ NAV ════════ -->
+<nav class="nav-strip">
+  <div class="nav-inner">
+    <a href="#areas">Research Areas</a>
+    <a href="#faculty">Faculty</a>
+    <a href="#affiliated">Affiliated Faculty</a>
+    <a href="#programs">Programs</a>
+    <a href="#qr">QR Code</a>
+  </div>
+</nav>
+
+<div class="content">
+
+<!-- ════════ RESEARCH AREAS ════════ -->
+<section class="section" id="areas">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Popular Research Areas</h2>
+  <p class="section-desc">Our department spans the most sought-after disciplines in modern chemistry. Whether your passion lies in synthesis, computation, materials, or biology — there's a lab for you.</p>
+
+  <div class="area-grid">
+    <div class="area-card">
+      <h3>Organic &amp; Synthetic Chemistry</h3>
+      <p>Total synthesis, method development, catalysis, C–H functionalization, and transition-metal chemistry.</p>
+    </div>
+    <div class="area-card">
+      <h3>Bioorganic &amp; Chemical Biology</h3>
+      <p>Biocatalysis, protein engineering, peptidomimetics, and drug discovery at the chemistry–biology interface.</p>
+    </div>
+    <div class="area-card">
+      <h3>Biochemistry &amp; Protein Science</h3>
+      <p>Protein–protein interactions, structural biology, targeted protein degradation, and cancer therapeutics.</p>
+    </div>
+    <div class="area-card">
+      <h3>Computational &amp; Theoretical Chemistry</h3>
+      <p>QM/MM simulations, polarizable force fields, molecular dynamics, electronic structure theory, and machine learning.</p>
+    </div>
+    <div class="area-card">
+      <h3>Materials &amp; Inorganic Chemistry</h3>
+      <p>Metal-organic frameworks, porous polymers, luminescent materials, solid-state chemistry, and crystallography.</p>
+    </div>
+    <div class="area-card">
+      <h3>Polymer Chemistry</h3>
+      <p>Semiconducting polymers, photochromic materials, dynamic covalent chemistry, and 3D-printable polymers.</p>
+    </div>
+    <div class="area-card">
+      <h3>Analytical &amp; Nanochemistry</h3>
+      <p>Metal nanoparticle synthesis, electrochemistry, sensors, and spectroscopic methods for biomolecular analysis.</p>
+    </div>
+    <div class="area-card">
+      <h3>Biophysics &amp; Metalloprotein Science</h3>
+      <p>Metal homeostasis, metalloprotein structure–function, oxidative stress, and biophysical spectroscopy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FACULTY ════════ -->
+<section class="section" id="faculty">
+  <div class="section-label">Our People</div>
+  <h2 class="section-title">Department Faculty</h2>
+  <p class="section-desc">Tap any name to visit their profile. Our faculty lead externally funded research programs and welcome graduate students across all areas.</p>
+
+  <!-- PROFESSORS -->
+  <div class="faculty-group-label">Professors</div>
+  <div class="faculty-list">
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/balkus" target="_blank">Kenneth J. Balkus Jr.</a></div>
+      <div class="faculty-title">Professor</div>
+      <div class="faculty-focus">Nanoporous materials, zeolites, thin films, and electrospun nanofibers for energy and biomedical applications.</div>
+      <div class="faculty-tags"><span class="tag">Materials</span><span class="tag">Inorganic</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/rudi.fasan" target="_blank">Rudi Fasan</a></div>
+      <div class="faculty-title">Robert A. Welch Distinguished Chair · CPRIT Scholar</div>
+      <div class="faculty-focus">Bioorganic chemistry, biocatalysis, enzyme engineering for "new-to-nature" reactions, peptidomimetics, and anticancer drug discovery.</div>
+      <div class="faculty-tags"><span class="tag">Bioorganic</span><span class="tag">Biocatalysis</span><span class="tag">Drug Discovery</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/vladimir.gevorgyan" target="_blank">Vladimir Gevorgyan</a></div>
+      <div class="faculty-title">Robert A. Welch Distinguished Chair</div>
+      <div class="faculty-focus">Novel synthetic methods for heterocycles, C–H functionalization, and visible-light-induced radical chemistry.</div>
+      <div class="faculty-tags"><span class="tag">Organic Synthesis</span><span class="tag">Catalysis</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/mci071000" target="_blank">Mihaela C. Stefan</a></div>
+      <div class="faculty-title">Eugene McDermott Professor · Department Head</div>
+      <div class="faculty-focus">Semiconducting and liquid-crystalline conjugated polymers, block copolymers, and organic electronics.</div>
+      <div class="faculty-tags"><span class="tag">Polymer</span><span class="tag">Materials</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/jiezheng" target="_blank">Jie Zheng</a></div>
+      <div class="faculty-title">Professor</div>
+      <div class="faculty-focus">Atomically precise metal nanoclusters, nano-bio interactions, renal-clearable nanomedicine, and theranostics.</div>
+      <div class="faculty-tags"><span class="tag">Nanochemistry</span><span class="tag">Biomedical</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/andres" target="_blank">G. Andrés Cisneros</a></div>
+      <div class="faculty-title">Professor of Physics, Chemistry &amp; Biochemistry · RSC Fellow</div>
+      <div class="faculty-focus">Computational methods development, QM/MM simulations, polarizable force fields, enzymatic mechanisms, and cancer biomarkers.</div>
+      <div class="faculty-tags"><span class="tag">Computational</span><span class="tag">Biophysics</span></div>
+    </div>
+
+  </div>
+
+  <!-- ASSOCIATE PROFESSORS -->
+  <div class="faculty-group-label">Associate Professors</div>
+  <div class="faculty-list">
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/jxa041100" target="_blank">Jung-Mo Ahn</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Peptidomimetics, protein–protein interaction inhibitors, and therapeutic agent design.</div>
+      <div class="faculty-tags"><span class="tag">Bioorganic</span><span class="tag">Medicinal</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/biewerm" target="_blank">Michael C. Biewer</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Photochromic semiconducting polymers and optoelectronic materials.</div>
+      <div class="faculty-tags"><span class="tag">Polymer</span><span class="tag">Materials</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/sxd156730" target="_blank">Sheena D'Arcy</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Structural and biophysical studies of chromatin, histone variants, and protein complexes.</div>
+      <div class="faculty-tags"><span class="tag">Biochemistry</span><span class="tag">Structural Biology</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/scd023000" target="_blank">Sheel Dodani</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Genetically encoded fluorescent indicators, directed evolution, and chloride biology.</div>
+      <div class="faculty-tags"><span class="tag">Chemical Biology</span><span class="tag">Biosensors</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/jjg130230" target="_blank">Jeremiah J. Gassensmith</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Biomolecule–MOF composites, virus-like particles, drug delivery, and energy materials.</div>
+      <div class="faculty-tags"><span class="tag">Materials</span><span class="tag">Chemical Biology</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/gxm152330" target="_blank">Gabriele Meloni</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Metal homeostasis, metalloprotein biochemistry, and biophysical spectroscopy of zinc and copper proteins.</div>
+      <div class="faculty-tags"><span class="tag">Biophysics</span><span class="tag">Inorganic</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/son051000" target="_blank">Steven O. Nielsen</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Molecular dynamics simulations of soft matter, nanoparticle self-assembly, and interfacial phenomena.</div>
+      <div class="faculty-tags"><span class="tag">Computational</span><span class="tag">Physical</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/pantano" target="_blank">Paul Pantano</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Analytical chemistry, electrochemistry, carbon nanotube biocompatibility, and nanotoxicology.</div>
+      <div class="faculty-tags"><span class="tag">Analytical</span><span class="tag">Nano</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/ras120030" target="_blank">Ronald A. Smaldone</a></div>
+      <div class="faculty-title">Associate Professor</div>
+      <div class="faculty-focus">Dynamic covalent chemistry, porous organic materials, 3D-printable polymers, and sustainable materials.</div>
+      <div class="faculty-tags"><span class="tag">Organic</span><span class="tag">Materials</span><span class="tag">Polymer</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/mario.wriedt" target="_blank">Mario Wriedt</a></div>
+      <div class="faculty-title">Associate Professor · Francis S. &amp; Maurine G. Johnson Chair Fellow</div>
+      <div class="faculty-focus">Metal-organic frameworks, porous organic polymers, crystallography, carbon capture, and PFAS remediation.</div>
+      <div class="faculty-tags"><span class="tag">Inorganic</span><span class="tag">Materials</span><span class="tag">Crystallography</span></div>
+    </div>
+
+  </div>
+
+  <!-- ASSISTANT PROFESSORS -->
+  <div class="faculty-group-label">Assistant Professors</div>
+  <div class="faculty-list">
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/connor.delaney" target="_blank">Connor Delaney</a></div>
+      <div class="faculty-title">Assistant Professor</div>
+      <div class="faculty-focus">Organometallic chemistry, transition-metal catalysis, and new methods for saturated heterocycle synthesis.</div>
+      <div class="faculty-tags"><span class="tag">Organic</span><span class="tag">Catalysis</span><span class="tag">Organometallic</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/shruti.hariyani" target="_blank">Shruti Hariyani</a></div>
+      <div class="faculty-title">Assistant Professor</div>
+      <div class="faculty-focus">Solid-state and inorganic materials, luminescent phosphors, energy-efficient lighting, and fluoride-ion batteries.</div>
+      <div class="faculty-tags"><span class="tag">Inorganic</span><span class="tag">Solid-State</span><span class="tag">Materials</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/ziwen.jiang" target="_blank">Ziwen Jiang</a></div>
+      <div class="faculty-title">Assistant Professor · CPRIT Scholar</div>
+      <div class="faculty-focus">Protein-based therapeutics, targeted protein degradation, organelle homeostasis, and anticancer drug development.</div>
+      <div class="faculty-tags"><span class="tag">Biochemistry</span><span class="tag">Drug Discovery</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/alistair.sterling" target="_blank">Alistair Sterling</a></div>
+      <div class="faculty-title">Assistant Professor</div>
+      <div class="faculty-focus">Theoretical physical organic chemistry, electronic structure theory, predictive catalysis modeling, and photochemistry.</div>
+      <div class="faculty-tags"><span class="tag">Computational</span><span class="tag">Physical Organic</span></div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-name"><a href="https://profiles.utdallas.edu/hedieh.torabifard" target="_blank">Hedieh Torabifard</a></div>
+      <div class="faculty-title">Assistant Professor</div>
+      <div class="faculty-focus">Computational chemistry, molecular dynamics of membrane transport proteins, bio-based ionic liquids, and drug delivery.</div>
+      <div class="faculty-tags"><span class="tag">Computational</span><span class="tag">Biophysics</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════ AFFILIATED FACULTY ════════ -->
+<section class="section" id="affiliated">
+  <div class="section-label">Cross-Departmental</div>
+  <h2 class="section-title">Affiliated &amp; Adjunct Faculty</h2>
+  <p class="section-desc">These colleagues hold primary appointments in other UT Dallas departments but actively contribute to chemistry research and graduate education.</p>
+
+  <div class="affiliated-grid">
+    <div class="aff-card">
+      <div class="faculty-name">Yves J. Chabal</div>
+      <div class="faculty-focus">Surface science &amp; spectroscopy</div>
+    </div>
+    <div class="aff-card">
+      <div class="faculty-name">Lev D. Gelb</div>
+      <div class="faculty-focus">Computational materials science</div>
+    </div>
+    <div class="aff-card">
+      <div class="faculty-name">Manuel Quevedo-Lopez</div>
+      <div class="faculty-focus">Electronic materials</div>
+    </div>
+    <div class="aff-card">
+      <div class="faculty-name">Walter E. Voit</div>
+      <div class="faculty-focus">Shape-memory polymers</div>
+    </div>
+    <div class="aff-card">
+      <div class="faculty-name">Amy V. Walker</div>
+      <div class="faculty-focus">Surface &amp; interface chemistry</div>
+    </div>
+    <div class="aff-card">
+      <div class="faculty-name">Anvar A. Zakhidov</div>
+      <div class="faculty-focus">Nanotech &amp; photovoltaics</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PROGRAMS ════════ -->
+<section class="section" id="programs">
+  <div class="section-label">Join Us</div>
+  <h2 class="section-title">Graduate Programs</h2>
+  <p class="section-desc">We offer M.S. and Ph.D. degrees in Chemistry with research tracks spanning every area listed above. Competitive stipends, tuition waivers, and access to state-of-the-art facilities including a national crystallography hub.</p>
+  <div class="area-grid">
+    <div class="area-card" style="border-left-color: var(--utd-orange);">
+      <h3>Ph.D. in Chemistry</h3>
+      <p>75+ credit hours beyond B.S. Innovation-focused research with interdisciplinary electives. Qualify in Year 2.</p>
+    </div>
+    <div class="area-card" style="border-left-color: var(--utd-orange);">
+      <h3>M.S. in Chemistry</h3>
+      <p>30 credit hours, full- or part-time. Thesis option with hands-on lab research. Ideal for industry or further study.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ QR CODE ════════ -->
+<section class="qr-section" id="qr">
+  <h2>Take This Page With You</h2>
+  <p>Once this page is hosted online, update the URL below and the QR code will generate automatically. Print it for your recruiting table!</p>
+  <div style="margin-bottom:1rem;">
+    <input type="text" id="qr-url" value="https://chemistry.utdallas.edu" 
+      style="font-family: inherit; font-size:0.85rem; padding:0.5rem 0.75rem; border:1px solid var(--light-border); border-radius:8px; width:100%; max-width:400px;" 
+      placeholder="Paste your hosted URL here">
+    <button onclick="generateQR()" style="margin-top:0.5rem; font-family:inherit; font-size:0.85rem; font-weight:600; padding:0.5rem 1.2rem; background:var(--utd-green); color:#fff; border:none; border-radius:8px; cursor:pointer;">Generate QR</button>
+  </div>
+  <div id="qr-code-container"></div>
+  <p class="qr-note">Tip: Host this HTML file on GitHub Pages, Netlify, or any static host. Then paste the URL above and print the QR code for your booth.</p>
+</section>
+
+</div><!-- .content -->
+
+<!-- ════════ CTA ════════ -->
+<div class="cta-banner">
+  <h2>Ready to Start Your Journey?</h2>
+  <p>Apply to our graduate program or contact us to learn more.</p>
+  <a href="https://chemistry.utdallas.edu/graduates/" target="_blank" rel="noopener">Apply Now</a>
+</div>
+
+<footer class="footer">
+  &copy; 2026 Department of Chemistry &amp; Biochemistry · <a href="https://chemistry.utdallas.edu" target="_blank">The University of Texas at Dallas</a><br>
+  800 W. Campbell Road, Richardson, TX 75080
+</footer>
+
+<!-- QR Code Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // Smooth scroll for nav
+  document.querySelectorAll('.nav-inner a').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Highlight active nav on scroll
+  const sections = document.querySelectorAll('.section, .qr-section');
+  const navLinks = document.querySelectorAll('.nav-inner a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // QR Code generator
+  let qrObj = null;
+  function generateQR() {
+    const url = document.getElementById('qr-url').value.trim();
+    if (!url) return;
+    const container = document.getElementById('qr-code-container');
+    container.innerHTML = '';
+    qrObj = new QRCode(container, {
+      text: url,
+      width: 220,
+      height: 220,
+      colorDark: '#006633',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+
+  // Generate default on load
+  window.addEventListener('DOMContentLoaded', generateQR);
+</script>
+
+</body>
+</html>
